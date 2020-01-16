@@ -1,6 +1,6 @@
 {
   "name": "homebridge-eth3bus",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "ETH3BUS for homebridge",
   "license": "ISC",
   "keywords": [
