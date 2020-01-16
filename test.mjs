@@ -19,25 +19,33 @@ async function queryInstal() {
         const zone = parseInt(lines[idx++]);
         const devType = parseInt(lines[idx++]);
         const iconId = parseInt(lines[idx++]);
-        console.log({footprint, name, x, y, addr, zone, devType, iconId});
+        log({footprint, name, x, y, addr, zone, devType, iconId});
     }
 }
 
 async function connection() {    
     const conn = new E3BConnection('192.168.1.35', log, 5000);
-    console.log('enum');
+    log('enum 1');
     conn.enum();
-    console.log('read packet 1');
+    log('enum 2');
+    conn.enum();
+    log('enum 3');
+    conn.enum();
+    log('read packet 1');
     conn.sendPacket(49, E3BConnection.Command.READ, 0);
-    console.log('read packet 2');
+    log('read packet 2');
     await conn.sendPacket(49, E3BConnection.Command.READ, 1);
-    console.log('waiting for disconnect');
+    log('waiting for disconnect');
     setTimeout(async () => {
-        console.log('read packet 3');
+        log('read packet 3');
         conn.sendPacket(49, E3BConnection.Command.READ, 2);
-        console.log('read packet 4');
-        await conn.sendPacket(49, E3BConnection.Command.READ, 3);    
-        console.log('waiting for disconnect');
+        log('enum 4');
+        conn.enum();
+        log('read packet 4');
+        conn.sendPacket(49, E3BConnection.Command.READ, 3);    
+        log('enum 5');
+        await conn.enum();
+        log('waiting for disconnect');
     }, 7000);
 }
 
