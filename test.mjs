@@ -23,8 +23,9 @@ async function queryInstal() {
     }
 }
 
-async function connection() {    
-    const conn = new E3BConnection('192.168.1.35', log, 5000);
+async function connection() {
+    const ip = '192.168.1.35';
+    const conn = new E3BConnection({ip}, log, 5000);
     log('enum 1');
     conn.enum();
     log('enum 2');

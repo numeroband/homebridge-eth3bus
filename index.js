@@ -15,9 +15,12 @@ class Eth3BusPlatform {
     this.api = api;
     this.name = PLATFORM_NAME;
 
-    this.api.on('didFinishLaunching', async () => {
+    this.api.on('didFinishLaunching', () => {
       this.log("DidFinishLaunching");
-      this.createAccessories();
+      this.createAccessories()
+      .catch(err => {
+        this.log("Error creating accessories");
+      });
     });  
   }
 
@@ -29,7 +32,7 @@ class Eth3BusPlatform {
   async createAccessories() {
     const ThermostatAccessory = (await import('./lib/ThermostatAccessory.mjs')).default;
     const Eth3Bus = (await import('./lib/Eth3Bus.mjs')).default;
-    const bus = new Eth3Bus(this.log, this.config.ip);
+    const bus = new Eth3Bus(this.log, this.config);
     const devices = await bus.getDevices();
     devices.forEach(device => new ThermostatAccessory(this.log, this.api, this.accessoryFromDevice(device), device));
     this.registerAccessories();
